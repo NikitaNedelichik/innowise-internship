@@ -58,8 +58,7 @@ class Model
 			} else {
 				$res = false;
 			}
-		}
-		catch (\PDOException $e) {
+		} catch (\PDOException $e) {
 			echo "Database error: " . $e->getMessage();
 		}
 		return $res;
@@ -76,8 +75,7 @@ class Model
 			$stmt->bindParam(":gender", $gender);
 			$stmt->bindParam(":status", $status);
 			$isOkey = $stmt->execute();
-		}
-		catch (\PDOException $e) {
+		} catch (\PDOException $e) {
 			echo "Database error: " . $e->getMessage();
 		}
 		return $isOkey;
@@ -90,8 +88,7 @@ class Model
 			$sth = $this->connection->prepare($sql);
 			$sth->execute();
 			$array = $sth->fetch(\PDO::FETCH_ASSOC);
-		}
-		catch (\PDOException $e) {
+		} catch (\PDOException $e) {
 			echo "Database error: " . $e->getMessage();
 		}
 		return $array;
