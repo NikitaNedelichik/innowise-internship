@@ -49,7 +49,8 @@ class View
 		}
 		return $block;
 	}
-	public static function getStatus($statusParam): string
+
+	public static function getStatus($statusParam = false): string
 	{
 		$statusAr = [
 			'choose',
@@ -62,7 +63,7 @@ class View
 				if (isset($statusParam) && $statusParam === $status) {
 					$block .= '<option value="' . $status . '" selected="selected">' . $status . '</option>';
 				} else {
-					$block .= '<option value="'. $status .'">' . $status . '</option>';
+					$block .= '<option value="' . $status . '">' . $status . '</option>';
 				}
 			} else {
 				$block .= '<option>' . $status . '</option>';

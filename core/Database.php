@@ -26,7 +26,7 @@ class Database
 				)');
 			}
 		} catch (PDOException $exception) {
-			echo '<div class="alert alert-danger">Невозможно создать товар.</div>';
+			echo $exception->getMessage();
 		}
 		return static::$connection;
 	}
