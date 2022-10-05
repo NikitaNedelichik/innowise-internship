@@ -31,6 +31,4 @@ class Router
 		}
 		return call_user_func($init);
 	}
-
-
 }

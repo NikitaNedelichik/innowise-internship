@@ -4,7 +4,6 @@ namespace app\core\controllers;
 
 use app\core\models\Model;
 use app\core\Request;
-use app\core\Router;
 use app\core\Validate;
 use app\core\View;
 
@@ -62,5 +61,4 @@ class Controller
 			}
 		}
 	}
-
 }

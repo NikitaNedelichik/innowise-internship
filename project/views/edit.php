@@ -33,6 +33,5 @@ extract($user);
 				<a href="/" class="btn btn-primary">Cancel</a>
 			</div>
 		</div>
-
 	</form>
 </div>
