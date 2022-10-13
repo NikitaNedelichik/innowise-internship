@@ -78,7 +78,7 @@ class Model
 		return $array;
 	}
 
-	public function deleteUserById()
+	public function deleteUserById($id)
 	{
 		try {
 			$sql = "DELETE FROM `users` WHERE id = $id";

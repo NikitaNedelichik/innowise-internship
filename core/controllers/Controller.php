@@ -47,10 +47,6 @@ class Controller
         if (Request::isPost()) {
             $this->model->loadData(Request::getBody());
             if ($this->model->isValid() && $this->model->editUserByEmail()) {
-                var_dump($this->model->email);
-                var_dump($this->model->name);
-                var_dump($this->model->status);
-                var_dump($this->model->gender);
                 return View::render('edit', [
                     'model' => $this->model
                 ]);
@@ -75,6 +71,4 @@ class Controller
 		}
 		return View::render('reload');
 	}
-
-
 }
