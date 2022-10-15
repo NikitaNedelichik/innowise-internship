@@ -4,8 +4,6 @@ namespace app\core;
 
 class Database
 {
-	private static $host = 'localhost';
-	private static $dbName = 'users';
 	private static $userName = 'root';
 	private static $userPassword = '';
 	public static $connection;

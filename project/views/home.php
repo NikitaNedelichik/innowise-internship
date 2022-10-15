@@ -12,7 +12,7 @@
 			<th>Actions</th>
 		</tr>
 		<?php
-		foreach ($users as $user):
+		foreach ($model->users as $user):
 			extract($user);
 			?>
 			<tr>

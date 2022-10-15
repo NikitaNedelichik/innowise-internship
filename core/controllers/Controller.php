@@ -17,18 +17,8 @@ class Controller
 
 	public function create()
 	{
-		if (Request::isPost()) {
-			$this->model->loadData(Request::getBody());
-            if ($this->model->isValid() && $this->model->createUser()) {
-                return View::render('create', [
-                    'model' => $this->model
-                ]);
-            }
-            return View::render('create', [
-                'model' => $this->model
-            ]);
-		}
-		return View::render('create', [
+        $this->model->loadData(Request::getBody());
+        return View::render('create', [
             'model' => $this->model
         ]);
 	}
@@ -36,31 +26,22 @@ class Controller
     public function edit()
     {
         if (Request::isGet()) {
-            $id = Request::getBody()['id'] ?? false;
-            if ($id) {
-                $this->model->getUserById($id);
-                return View::render('edit', [
-                    'model' => $this->model
-                ]);
-            }
+            $this->model->getUserById(Request::getBody()['id']);
         }
         if (Request::isPost()) {
             $this->model->loadData(Request::getBody());
-            if ($this->model->isValid() && $this->model->editUserByEmail()) {
-                return View::render('edit', [
-                    'model' => $this->model
-                ]);
-            }
-            return View::render('edit', [
-                'model' => $this->model
-            ]);
         }
+        return View::render('edit', [
+            'model' => $this->model
+        ]);
     }
 
 	public function home()
 	{
-		$users['users'] = $this->model->getAllUsers();
-		return View::render('home', $users);
+		$this->model->getAllUsers();
+		return View::render('home', [
+            'model' => $this->model
+        ]);
 	}
 
 	public function delete()
