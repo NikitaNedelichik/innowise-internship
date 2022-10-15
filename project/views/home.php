@@ -11,7 +11,7 @@
 			<th>Status</th>
 			<th>Actions</th>
 		</tr>
-		<?
+		<?php
 		foreach ($users as $user):
 			extract($user);
 			?>
@@ -30,7 +30,7 @@
 					</a>
 				</td>
 			</tr>
-		<? endforeach; ?>
+		<?php endforeach; ?>
 	</table>
 </div>
 <script src="/js/script.js"></script>

@@ -1,5 +1,7 @@
 <?php
+
 ini_set('error_log', 'errors');
+
 require_once 'vendor/autoload.php';
 
 use app\core\Application;
@@ -16,4 +18,3 @@ Router::get('/edit', [new Controller(), 'edit']);
 Router::post('/edit', [new Controller(), 'edit']);
 
 $app->run();
-?>

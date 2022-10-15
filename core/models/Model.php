@@ -3,6 +3,7 @@
 namespace app\core\models;
 
 use app\core\Database;
+
 use app\core\Validate;
 
 class Model
