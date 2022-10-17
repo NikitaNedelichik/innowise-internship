@@ -15,14 +15,14 @@ class Model
     public $email;
     public $gender;
     public $status;
-    public $ownEmail;
+    public $users;
 
     public function __construct()
 	{
         $this->connection = Database::getConnection();
 	}
 
-    private function isSetEmail($ownEmail = ''): bool
+    private function isSetEmail(): bool
     {
         $isSet = false;
         $sql = "SELECT email FROM `users`";
@@ -30,7 +30,6 @@ class Model
         $sth->execute();
         $array = $sth->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($array as $email) {
-            if ($email['id'] === $_GET['id']) continue;
             if ($email['email'] === $this->email) {
                 $this->errors['email'] = 'User with this email is already exist!';
                 $isSet = true;
@@ -75,8 +74,7 @@ class Model
 		} catch (\PDOException $exception) {
 			echo '<div class="alert alert-danger">Something wrong</div>';
 		}
-
-		return $array;
+		return $this->users = $array;
 	}
 
 	public function deleteUserById($id)
@@ -125,7 +123,6 @@ class Model
 			$isOkey = $sth->execute();
 			$array = $sth->fetch(\PDO::FETCH_ASSOC);
             if ($isOkey) {
-                $this->ownEmail = $array['email'];
                 $this->name = $array['name'];
                 $this->email = $array['email'];
                 $this->gender = $array['gender'];
@@ -157,6 +154,12 @@ class Model
                     $this->status = $value;
                     break;
             }
+        }
+
+        if (isset($data['create']) && $this->isValid()) {
+            $this->createUser();
+        } elseif (isset($data['edit']) && $this->isValid()) {
+            $this->editUserByEmail();
         }
     }
 

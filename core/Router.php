@@ -8,21 +8,20 @@ class Router
 {
 	public static $list = [];
 
-	public static function get($uri, $viewName)
+	public static function page($uri, $viewName)
 	{
-		self::$list['get'][$uri] = $viewName;
-	}
-
-	public static function post($uri, $viewName)
-	{
-		self::$list['post'][$uri] = $viewName;
+		self::$list[$uri] = $viewName;
 	}
 
 	public static function enable()
 	{
+        Router::page('/', [new Controller(), 'home']);
+        Router::page('/create', [new Controller(), 'create']);
+        Router::page('/delete', [new Controller(), 'delete']);
+        Router::page('/edit', [new Controller(), 'edit']);
+
 		$path = Request::getPath();
-		$method = Request::getMethod();
-		$init = self::$list[$method][$path] ?? false;
+		$init = self::$list[$path] ?? false;
 		if ($init === false) {
 			return View::render('404');
 		}

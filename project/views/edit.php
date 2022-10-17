@@ -1,10 +1,45 @@
+<?php
+function getStatus($statusParam = false): string
+{
+    $statusAr = [
+        'active',
+        'inactive'
+    ];
+    $block = '';
+    foreach ($statusAr as $key => $status) {
+        if (isset($statusParam) && $statusParam === $status) {
+            $block .= '<option value="' . $status . '" selected="selected">' . $status . '</option>';
+        } else {
+            $block .= '<option value="' . $status . '">' . $status . '</option>';
+        }
+    }
+    return $block;
+}
+
+function getGender($genderParam = false): string
+{
+    $genderAr = [
+        "male",
+        "female"
+    ];
+    $block = '';
+    foreach ($genderAr as $key => $gender) {
+        if (isset($genderParam) && $genderParam === $gender) {
+            $block .= '<option value="' . $gender . '" selected="selected">' . $gender . '</option>';
+        } else {
+            $block .= '<option value="' . $gender . '">' . $gender . '</option>';
+        }
+    }
+    return $block;
+}
+?>
 <div class="container">
 	<form method="post" action="">
-        <? if ($model->success) :?>
+        <?php if ($model->success) :?>
             <div class="alert alert-success" role="alert">
                 <?= $model->successMessage()?>
             </div>
-        <? endif; ?>
+        <?php endif; ?>
 		<div class="form-group">
 			<label for="exampleInputEmail1">Email address</label>
 			<input type="email" name="email" class="form-control<?= $model->hasError('email') ? ' is-invalid': ''?>"
@@ -25,18 +60,18 @@
 		<div class="form-group">
 			<label for="exampleSelect1">Gender</label>
 			<select class="form-control" id="exampleSelect1" name="gender">
-				<?= \app\core\View::getGender($model->gender); ?>
+				<?= getGender($model->gender); ?>
 			</select>
 		</div>
 		<div class="form-group">
 			<label for="exampleSelect2">Status</label>
 			<select class="form-control" id="exampleSelect2" name="status">
-				<?= \app\core\View::getStatus($model->status); ?>
+				<?= getStatus($model->status); ?>
 			</select>
 		</div>
 		<div class="row">
 			<div class="col">
-				<button type="submit" class="btn btn-primary">Update user</button>
+				<button type="submit" name="edit" value="go" class="btn btn-primary">Update user</button>
 			</div>
 			<div class="col">
 				<a href="/" class="btn btn-primary">Cancel</a>
