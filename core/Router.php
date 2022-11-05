@@ -2,32 +2,41 @@
 
 namespace app\core;
 
-use app\core\controllers\Controller;
+use app\core\Controllers\AuthController;
+use app\core\Controllers\UserController;
 
 class Router
 {
-	public static $list = [];
+    private static array $list = [];
+    private static View $view;
 
-	public static function page($uri, $viewName)
-	{
-		self::$list[$uri] = $viewName;
-	}
+    public static function page($uri, $viewName)
+    {
+        self::$list[$uri] = $viewName;
+    }
 
-	public static function enable()
-	{
-        Router::page('/', [new Controller(), 'home']);
-        Router::page('/create', [new Controller(), 'create']);
-        Router::page('/delete', [new Controller(), 'delete']);
-        Router::page('/edit', [new Controller(), 'edit']);
+    public static function enable()
+    {
+        self::setRoutes();
+        $path = Request::getPath();
+        $init = self::$list[$path] ?? false;
+        if ($init === false) {
+            self::$view = new View();
+            return self::$view->render('404');
+        }
+        if (is_string($init)) {
+            self::$view = new View();
+            return self::$view->render($init);
+        }
+        return call_user_func($init);
+    }
 
-		$path = Request::getPath();
-		$init = self::$list[$path] ?? false;
-		if ($init === false) {
-			return View::render('404');
-		}
-		if (is_string($init)) {
-			return View::render($init);
-		}
-		return call_user_func($init);
-	}
+    private static function setRoutes()
+    {
+        Router::page('/', [new UserController(), 'home']);
+        Router::page('/create', [new UserController(), 'create']);
+        Router::page('/delete', [new UserController(), 'delete']);
+        Router::page('/edit', [new UserController(), 'edit']);
+        Router::page('/auth', [new AuthController(), 'auth']);
+    }
 }
