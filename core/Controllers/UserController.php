@@ -4,6 +4,7 @@ namespace app\core\Controllers;
 
 use app\core\App\MainController;
 use app\core\Models\UserModel;
+use app\core\Request;
 
 class UserController extends MainController
 {
@@ -15,7 +16,7 @@ class UserController extends MainController
 
     public function create(): string
     {
-        $user = $this->model->createUser();
+        $user = $this->model->createUser(Request::getRequestParams());
         return $this->view->render('create', [
             'user' => $user
         ]);

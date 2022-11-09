@@ -9,11 +9,6 @@ abstract class MainModel
     protected \PDO $connection;
     public $errors = [];
     public $success;
-    public $name;
-    public $email;
-    public $gender;
-    public $status;
-    public $users;
 
     public function __construct()
     {
