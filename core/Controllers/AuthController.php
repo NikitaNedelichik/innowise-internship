@@ -4,6 +4,7 @@ namespace app\core\Controllers;
 
 use app\core\App\MainController;
 use app\core\Helpers\AuthHelper;
+use app\core\Request;
 
 class AuthController extends MainController
 {
@@ -16,9 +17,12 @@ class AuthController extends MainController
 
     public function auth(): string
     {
-        $isAuth = $this->helper->authUser();
+        if (Request::isPost()) {
+            $isAuth = $this->helper->authUser(Request::getRequestParams());
+        }
+
         return $this->view->render('auth', [
-            'message' => $isAuth
+            'message' => $isAuth ?? ''
         ]);
     }
 }
