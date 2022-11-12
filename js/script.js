@@ -1,7 +1,7 @@
 const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 const messages = {
-    messageEmail : '<h4>Enter correct email</h4>',
-    messageConfirmEmail : '<h4>Enter correct confirm of the email</h4>',
+    messageEmail : 'Enter correct email',
+    messageConfirmEmail : 'Enter correct confirm of the email',
     authMessage : '<h4>Enter correct data</h4>'
 }
 let btnsDelete = document.querySelectorAll('.delete-object');
@@ -28,7 +28,7 @@ if (!!submitAuth) {
             form.insertAdjacentHTML('beforebegin', messages.authMessage);
             setTimeout(() => {
                 document.querySelector('.container').removeChild(document.querySelector('h4'));
-            }, 5000);
+            }, 3000);
             event.preventDefault();
         }
     })
@@ -41,13 +41,11 @@ if (!!createButton) {
         let inputEmail = formCreate.email;
         let inputEmailConfirm = formCreate.email_confirm;
         if (!isEmailValid(inputEmail.value)) {
-            resetForm(formCreate, messages.messageEmail);
-            return;
+            resetForm(formCreate, inputEmail, messages.messageEmail);
         }
 
         if (!isEmailValid(inputEmailConfirm.value)) {
-            resetForm(formCreate, messages.messageConfirmEmail);
-            return;
+            resetForm(formCreate, inputEmailConfirm, messages.messageConfirmEmail);
         }
     })
 }
@@ -56,12 +54,17 @@ function isEmailValid(value) {
     return EMAIL_REGEXP.test(value);
 }
 
-function resetForm(form, message) {
+function resetForm(form, input, message) {
     form.email.value = '';
     form.email_confirm.value = '';
-    form.insertAdjacentHTML('beforebegin', message);
+    input.classList.add('is-invalid');
+    let div = document.createElement('div');
+    div.classList.add('invalid-feedback');
+    div.innerHTML = message;
+    input.insertAdjacentElement('afterend', div);
     setTimeout(() => {
-        document.querySelector('.container').removeChild(document.querySelector('h4'));
-    }, 2000);
+        document.querySelector('.invalid-feedback').parentNode.removeChild(document.querySelector('.invalid-feedback'));
+        input.classList.remove('is-invalid');
+    }, 3000);
     event.preventDefault();
 }

@@ -109,7 +109,7 @@ class UserModel extends MainModel
             $valid = false;
         }
         if (Validate::isPasswordValid($this->passwordConfirm) !== true) {
-            $this->errors['passwordConfirm'] = Validate::isPasswordValid($this->password);
+            $this->errors['passwordConfirm'] = Validate::isPasswordValid($this->passwordConfirm);
             $valid = false;
         }
         if ($valid === true && $this->passwordConfirm !== $this->password) {
