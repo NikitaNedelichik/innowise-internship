@@ -35,8 +35,5 @@ class Router
     {
         Router::page('/', [new UserController(), 'home']);
         Router::page('/create', [new UserController(), 'create']);
-        Router::page('/delete', [new UserController(), 'delete']);
-        Router::page('/edit', [new UserController(), 'edit']);
-        Router::page('/auth', [new AuthController(), 'auth']);
     }
 }
