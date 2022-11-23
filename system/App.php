@@ -1,8 +1,10 @@
 <?php
 
-namespace app\core;
+namespace Innowise\system;
 
-class Application
+use Innowise\app\Router\Router;
+
+class App
 {
     public function run()
     {

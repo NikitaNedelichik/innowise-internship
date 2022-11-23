@@ -1,0 +1,90 @@
+{% extends 'main.twig' %}
+{% block body %}
+    <div class="container">
+        {% if user.errors.db_error is not empty %}
+            <div class="alert alert-danger" role="alert">
+                {{ user.errors.db_error }}
+            </div>
+        {% endif %}
+        {% if user.success is not empty %}
+            <div class="alert alert-success" role="alert">
+                {{ user.success }}
+            </div>
+        {% endif %}
+        <form method="post" action="" name="create_form">
+            <div class="form-group">
+                <label for="first-name">First name</label>
+                <span class="required">*</span>
+                <input id="first-name" type="text" name="first-name" placeholder="Enter first name" value="{{ user.firstName }}"
+                       class="form-control {% if user.errors.firstName is defined %}is-invalid{% endif %}"
+                >
+                {% if user.errors.firstName is not empty %}
+                    <div class="invalid-feedback">
+                        {{ user.errors.firstName }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="last-name">Last name</label>
+                <span class="required">*</span>
+                <input id="last-name" type="text" name="last-name" placeholder="Enter last name" value="{{ user.lastName }}"
+                       class="form-control {% if user.errors.lastName is defined %}is-invalid{% endif %}"
+                >
+                {% if user.errors.lastName is not empty %}
+                    <div class="invalid-feedback">
+                        {{ user.errors.lastName }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <span class="required">*</span>
+                <input id="email" type="email" name="email" placeholder="Enter email" value="{{ user.email }}"
+                       class="form-control {% if user.errors.email is defined %}is-invalid{% endif %}"
+                >
+                {% if user.errors.email is not empty %}
+                    <div class="invalid-feedback">
+                        {{ user.errors.email }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="email-confirm">Email confirm</label>
+                <span class="required">*</span>
+                <input id="email-confirm" type="email" name="email_confirm" placeholder="Confirm email" value="{{ user.emailConfirm }}"
+                       class="form-control {% if user.errors.emailConfirm is defined %}is-invalid{% endif %}"
+                >
+                {% if user.errors.emailConfirm is not empty %}
+                    <div class="invalid-feedback">
+                        {{ user.errors.emailConfirm }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <span class="required">*</span>
+                <input id="password" type="password" name="password" placeholder="Enter password" value=""
+                       class="form-control {% if user.errors.password is defined %}is-invalid{% endif %}"
+                >
+                {% if user.errors.password is not empty %}
+                    <div class="invalid-feedback">
+                        {{ user.errors.password }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="password-confirm">Password confirm</label>
+                <span class="required">*</span>
+                <input id="password-confirm" type="password" name="password_confirm" placeholder="Confirm password" value=""
+                       class="form-control {% if user.errors.passwordConfirm is defined %}is-invalid{% endif %}"
+                >
+                {% if user.errors.passwordConfirm is not empty %}
+                    <div class="invalid-feedback">
+                        {{ user.errors.passwordConfirm }}
+                    </div>
+                {% endif %}
+            </div>
+            <button id="register_button" type="submit" name="register" value="go" class="btn btn-primary">Sign up</button>
+        </form>
+    </div>
+{% endblock %}
