@@ -1,6 +1,6 @@
 <?php
 
-namespace app\core;
+namespace Innowise\system;
 
 class Request
 {
@@ -43,5 +43,15 @@ class Request
             }
         }
         return $body;
+    }
+
+    public static function getUploadedFileData(): array
+    {
+        $data = [];
+        foreach ($_FILES as $key => $file) {
+            $data[$key] = $file;
+        }
+
+        return $data;
     }
 }

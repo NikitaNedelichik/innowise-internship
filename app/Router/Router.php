@@ -1,9 +1,12 @@
 <?php
 
-namespace app\core;
+namespace Innowise\app\Router;
 
-use app\core\Controllers\AuthController;
-use app\core\Controllers\UserController;
+use Innowise\app\Controllers\AuthController;
+use Innowise\app\Controllers\FrontController;
+use Innowise\app\Controllers\RegistrationController;
+use Innowise\system\Request;
+use Innowise\app\Views\View;
 
 class Router
 {
@@ -33,7 +36,10 @@ class Router
 
     private static function setRoutes()
     {
-        Router::page('/', [new UserController(), 'home']);
-        Router::page('/create', [new UserController(), 'create']);
+        Router::page('/', [new FrontController(), 'index']);
+        Router::page('/register', [new RegistrationController(), 'register']);
+        Router::page('/auth', [new AuthController(), 'auth']);
+        Router::page('/logout', [new AuthController(), 'logout']);
+        Router::page('/upload', [new FrontController(), 'upload']);
     }
 }

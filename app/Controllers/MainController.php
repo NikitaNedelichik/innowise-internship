@@ -1,10 +1,11 @@
 <?php
 
-namespace app\core\App;
+namespace Innowise\App\Controllers;
 
-use app\core\View;
+use Innowise\app\Models\MainModel;
+use Innowise\app\Views\View;
 
-abstract class MainController
+class MainController
 {
     protected View $view;
     protected MainModel $model;

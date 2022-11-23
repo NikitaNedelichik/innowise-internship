@@ -1,6 +1,6 @@
 <?php
 
-namespace app\core;
+namespace Innowise\App\Views;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -12,7 +12,7 @@ class View
 
     public function __construct()
     {
-        $this->loader = new FilesystemLoader('templates');
+        $this->loader = new FilesystemLoader('../templates');
         $this->view = new Environment($this->loader);
     }
 

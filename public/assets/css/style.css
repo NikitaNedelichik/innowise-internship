@@ -9,3 +9,12 @@
 	margin-top: 50px;
 	max-width: 70%;
 }
+.my_div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 50px;
+}
+span.required {
+	color: red;
+}

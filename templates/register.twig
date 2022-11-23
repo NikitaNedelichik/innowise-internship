@@ -14,6 +14,7 @@
         <form method="post" action="" name="create_form">
             <div class="form-group">
                 <label for="first-name">First name</label>
+                <span class="required">*</span>
                 <input id="first-name" type="text" name="first-name" placeholder="Enter first name" value="{{ user.firstName }}"
                        class="form-control {% if user.errors.firstName is defined %}is-invalid{% endif %}"
                 >
@@ -25,6 +26,7 @@
             </div>
             <div class="form-group">
                 <label for="last-name">Last name</label>
+                <span class="required">*</span>
                 <input id="last-name" type="text" name="last-name" placeholder="Enter last name" value="{{ user.lastName }}"
                        class="form-control {% if user.errors.lastName is defined %}is-invalid{% endif %}"
                 >
@@ -36,6 +38,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
+                <span class="required">*</span>
                 <input id="email" type="email" name="email" placeholder="Enter email" value="{{ user.email }}"
                        class="form-control {% if user.errors.email is defined %}is-invalid{% endif %}"
                 >
@@ -47,6 +50,7 @@
             </div>
             <div class="form-group">
                 <label for="email-confirm">Email confirm</label>
+                <span class="required">*</span>
                 <input id="email-confirm" type="email" name="email_confirm" placeholder="Confirm email" value="{{ user.emailConfirm }}"
                        class="form-control {% if user.errors.emailConfirm is defined %}is-invalid{% endif %}"
                 >
@@ -58,6 +62,7 @@
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
+                <span class="required">*</span>
                 <input id="password" type="password" name="password" placeholder="Enter password" value=""
                        class="form-control {% if user.errors.password is defined %}is-invalid{% endif %}"
                 >
@@ -69,6 +74,7 @@
             </div>
             <div class="form-group">
                 <label for="password-confirm">Password confirm</label>
+                <span class="required">*</span>
                 <input id="password-confirm" type="password" name="password_confirm" placeholder="Confirm password" value=""
                        class="form-control {% if user.errors.passwordConfirm is defined %}is-invalid{% endif %}"
                 >
@@ -78,13 +84,7 @@
                     </div>
                 {% endif %}
             </div>
-            <button id="create_button" type="submit" name="create" value="go" class="btn btn-primary">Create user</button>
+            <button id="register_button" type="submit" name="register" value="go" class="btn btn-primary">Sign up</button>
         </form>
     </div>
-    <style>
-        #password::after {
-            content: '3';
-            color: #0a53be;
-        }
-    </style>
 {% endblock %}

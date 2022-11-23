@@ -1,12 +1,11 @@
 <?php
 
-namespace app\core\Models;
+namespace Innowise\app\Models;
 
-use app\core\App\MainModel;
-use app\core\Database;
-use app\core\Validate;
+use Innowise\app\Services\Validate;
+use Innowise\system\Database;
 
-class UserModel extends MainModel
+class RegisterModel extends MainModel
 {
     public $email;
     public $emailConfirm;
@@ -15,13 +14,16 @@ class UserModel extends MainModel
     public $password;
     public $passwordConfirm;
     public string $createdDate;
+    private \PDO $connection;
 
     public function __construct()
     {
         parent::__construct();
+        $this->connection = (Database::getInstance())->getConnection();
+        $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
-    private function loadData($data): UserModel
+    private function loadData($data): RegisterModel
     {
         $this->email = $data['email'] ?? '';
         $this->emailConfirm = $data['email_confirm'] ?? '';
@@ -34,15 +36,27 @@ class UserModel extends MainModel
         return $this;
     }
 
-    public function createUser($data): array
+    public function registerUser($data): array
     {
-        if ($data['create'] === 'go') {
+        if ($data['register'] === 'go') {
             if ($this->loadData($data)->isValid()) {
                 try {
                     $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+                    $sql = "INSERT INTO users (email, first_name, last_name, password, created_date) VALUES (:email, :first_name, :last_name, :password, :created_date)";
+                    $statm = $this->connection->prepare($sql);
+                    $statm->bindParam(":email", $this->email);
+                    $statm->bindParam(":first_name", $this->firstName);
+                    $statm->bindParam(":last_name", $this->lastName);
+                    $statm->bindParam(":password", $this->password);
+                    $statm->bindParam(":created_date", $this->createdDate);
                     $this->connection->beginTransaction();
-                    $this->success = Database::createUser($this->email, $this->firstName, $this->lastName, $this->password, $this->createdDate);
+                    $isOkey = $statm->execute();
                     $this->connection->commit();
+                    if ($isOkey > 0) {
+                        $this->success = "User was registered";
+                        $_SESSION['auth'] = 'yes';
+                        header('Location: /upload');
+                    }
                 } catch (\PDOException $e) {
                     $this->connection->rollBack();
                     if ($e->getCode() === "23000") {
@@ -55,19 +69,6 @@ class UserModel extends MainModel
         }
 
         return (array)$this;
-    }
-
-    public function getAllUsers(): array
-    {
-        try {
-            $this->connection->beginTransaction();
-            $array = Database::getUsersList();
-            $this->connection->commit();
-        } catch (\PDOException $exception) {
-            $this->connection->rollBack();
-            echo '<div class="alert alert-danger">' . $exception . '</div>';
-        }
-        return $this->users = $array;
     }
 
     public function isValid(): bool
@@ -90,26 +91,26 @@ class UserModel extends MainModel
     private function validate(): bool
     {
         $valid = true;
-        if (!Validate::isNameValid($this->firstName)) {
-            $this->errors['firstName'] = "The field name is invalid";
+        if (!$this->validator->isNameValid($this->firstName)) {
+            $this->errors['firstName'] = $this->validator->getError('name');
             $this->firstName = '';
             $valid = false;
         }
-        if (!Validate::isNameValid($this->lastName)) {
-            $this->errors['lastName'] = "The field name is invalid";
+        if (!$this->validator->isNameValid($this->lastName)) {
+            $this->errors['lastName'] = $this->validator->getError('name');
             $this->lastName = '';
             $valid = false;
         }
-        if (!Validate::isEmailValid($this->email)) {
-            $this->errors['email'] = "The field email is invalid";
+        if (!$this->validator->isEmailValid($this->email)) {
+            $this->errors['email'] = $this->validator->getError('email');
             $valid = false;
         }
-        if (Validate::isPasswordValid($this->password) !== true) {
-            $this->errors['password'] = Validate::isPasswordValid($this->password);
+        if ($this->validator->isPasswordValid($this->password) !== true) {
+            $this->errors['password'] = $this->validator->getError('password');
             $valid = false;
         }
-        if (Validate::isPasswordValid($this->passwordConfirm) !== true) {
-            $this->errors['passwordConfirm'] = Validate::isPasswordValid($this->passwordConfirm);
+        if ($this->validator->isPasswordValid($this->passwordConfirm) !== true) {
+            $this->errors['passwordConfirm'] = $this->validator->getError('passwordConfirm');
             $valid = false;
         }
         if ($valid === true && $this->passwordConfirm !== $this->password) {
